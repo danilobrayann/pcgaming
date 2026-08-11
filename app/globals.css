@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+:root {
+  --background: #09090b;
+  --foreground: #fafafa;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  color-scheme: dark;
+}
+
+/* Animação Gamer RGB */
+@keyframes rgb-glow {
+  0% { 
+    border-color: #ff0000; 
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), inset 0 0 10px rgba(255, 0, 0, 0.2);
+  }
+  33% { 
+    border-color: #00ff00; 
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.2); 
+  }
+  66% { 
+    border-color: #0000ff; 
+    box-shadow: 0 0 20px rgba(0, 0, 255, 0.5), inset 0 0 10px rgba(0, 0, 255, 0.2); 
+  }
+  100% { 
+    border-color: #ff0000; 
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), inset 0 0 10px rgba(255, 0, 0, 0.2); 
+  }
+}
+
+@keyframes rgb-text {
+  0% { color: #ff0000; }
+  33% { color: #00ff00; }
+  66% { color: #0000ff; }
+  100% { color: #ff0000; }
+}
+
+@keyframes rgb-bg {
+  0% { background-color: #ff0000; }
+  33% { background-color: #00ff00; }
+  66% { background-color: #0000ff; }
+  100% { background-color: #ff0000; }
+}
+
+.rgb-animate {
+  animation: rgb-glow 5s linear infinite;
+}
+
+.rgb-text-animate {
+  animation: rgb-text 5s linear infinite;
+}
+
+.rgb-bg-animate {
+  animation: rgb-bg 5s linear infinite;
+}
