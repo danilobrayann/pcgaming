@@ -16,10 +16,10 @@ export function CategoryFilter({ activeCategory, onSelectCategory }: CategoryFil
             key={cat.id}
             onClick={() => onSelectCategory(cat.id)}
             className={cn(
-              "px-5 py-2 rounded-full text-sm font-bold uppercase tracking-wider transition-all duration-200 border-2",
+              "px-5 py-2.5 rounded-full text-[11px] font-black uppercase tracking-widest transition-all duration-300 backdrop-blur-md",
               isActive
-                ? "rgb-animate bg-neutral-900 text-white scale-105"
-                : "border-neutral-800 bg-neutral-900 text-neutral-500 hover:text-white hover:border-neutral-600 hover:bg-neutral-800"
+                ? "rgb-animate bg-neutral-900/80 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)] scale-105"
+                : "border border-neutral-800/60 bg-neutral-900/30 text-neutral-400 hover:text-white hover:border-neutral-500/50 hover:bg-neutral-800/60 hover:shadow-[0_0_10px_rgba(255,255,255,0.05)]"
             )}
           >
             {cat.label}

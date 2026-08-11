@@ -19,48 +19,84 @@ body {
   color-scheme: dark;
 }
 
-/* Animação Gamer RGB */
+/* Animação Gamer RGB & Glassmorphism */
 @keyframes rgb-glow {
   0% { 
-    border-color: #ff0000; 
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), inset 0 0 10px rgba(255, 0, 0, 0.2);
+    border-color: rgba(255, 0, 0, 0.4); 
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 0 10px rgba(255, 0, 0, 0.1);
   }
   33% { 
-    border-color: #00ff00; 
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 255, 0, 0.2); 
+    border-color: rgba(0, 255, 0, 0.4); 
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3), inset 0 0 10px rgba(0, 255, 0, 0.1); 
   }
   66% { 
-    border-color: #0000ff; 
-    box-shadow: 0 0 20px rgba(0, 0, 255, 0.5), inset 0 0 10px rgba(0, 0, 255, 0.2); 
+    border-color: rgba(0, 0, 255, 0.4); 
+    box-shadow: 0 0 15px rgba(0, 0, 255, 0.3), inset 0 0 10px rgba(0, 0, 255, 0.1); 
   }
   100% { 
-    border-color: #ff0000; 
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), inset 0 0 10px rgba(255, 0, 0, 0.2); 
+    border-color: rgba(255, 0, 0, 0.4); 
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 0 10px rgba(255, 0, 0, 0.1); 
   }
 }
 
 @keyframes rgb-text {
-  0% { color: #ff0000; }
-  33% { color: #00ff00; }
-  66% { color: #0000ff; }
-  100% { color: #ff0000; }
+  0% { color: #ff3366; }
+  33% { color: #33ff99; }
+  66% { color: #3366ff; }
+  100% { color: #ff3366; }
 }
 
 @keyframes rgb-bg {
-  0% { background-color: #ff0000; }
-  33% { background-color: #00ff00; }
-  66% { background-color: #0000ff; }
-  100% { background-color: #ff0000; }
+  0% { background-color: #ff3366; }
+  33% { background-color: #33ff99; }
+  66% { background-color: #3366ff; }
+  100% { background-color: #ff3366; }
 }
 
 .rgb-animate {
-  animation: rgb-glow 5s linear infinite;
+  animation: rgb-glow 6s linear infinite;
 }
 
 .rgb-text-animate {
-  animation: rgb-text 5s linear infinite;
+  animation: rgb-text 6s linear infinite;
 }
 
 .rgb-bg-animate {
-  animation: rgb-bg 5s linear infinite;
+  animation: rgb-bg 6s linear infinite;
+}
+
+.glass-panel {
+  background: rgba(15, 15, 20, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card {
+  background: rgba(20, 20, 25, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glass-card:hover {
+  background: rgba(30, 30, 35, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Custom scrollbar for webkit */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.2);
 }

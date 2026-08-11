@@ -35,9 +35,9 @@ export function CartSidebar({ selectedPrograms, targetOs, setTargetOs }: CartSid
   };
 
   return (
-    <div className="flex flex-col h-full bg-neutral-950 border-l-4 border-neutral-900 w-full md:w-80 lg:w-96 p-6 shadow-[inset_10px_0_20px_rgba(0,0,0,0.5)]">
+    <div className="flex flex-col h-full w-full md:w-80 lg:w-96 p-6 glass-panel border-l border-neutral-800 shadow-[inset_10px_0_20px_rgba(0,0,0,0.2)] z-20">
       <h2 className="text-xl font-bold flex items-center gap-2 mb-6 uppercase tracking-wider text-white">
-        <Terminal size={24} className="rgb-text-animate" />
+        <Terminal size={24} className="rgb-text-animate drop-shadow-[0_0_10px_rgba(0,255,0,0.5)]" />
         Console
       </h2>
 
@@ -78,10 +78,13 @@ export function CartSidebar({ selectedPrograms, targetOs, setTargetOs }: CartSid
         ) : (
           <ul className="space-y-2">
             {selectedPrograms.map(p => (
-              <li key={p.id} className="text-sm font-medium flex justify-between items-center bg-black border border-neutral-800 p-3 rounded-lg shadow-inner">
-                <span className="truncate text-neutral-300">{p.name}</span>
+              <li key={p.id} className="text-sm font-medium flex justify-between items-center bg-black/40 border border-neutral-800/60 p-2.5 rounded-lg shadow-inner group hover:bg-neutral-900/60 transition-colors">
+                <div className="flex items-center gap-2 overflow-hidden">
+                  <img src={p.logo} alt={p.name} className="w-5 h-5 object-contain opacity-80 group-hover:opacity-100 transition-opacity" loading="lazy" />
+                  <span className="truncate text-neutral-300 group-hover:text-white transition-colors">{p.name}</span>
+                </div>
                 {!p.installCmd[targetOs] && (
-                  <span className="text-[10px] bg-red-900/40 border border-red-500/50 text-red-400 px-1.5 py-0.5 rounded uppercase font-bold">Incompatível</span>
+                  <span className="text-[9px] bg-red-900/40 border border-red-500/50 text-red-400 px-1.5 py-0.5 rounded uppercase font-black tracking-wider ml-2">Inc.</span>
                 )}
               </li>
             ))}
@@ -96,7 +99,7 @@ export function CartSidebar({ selectedPrograms, targetOs, setTargetOs }: CartSid
           </p>
         )}
         <div className="relative group">
-          <pre className="bg-black text-green-400 p-4 rounded-xl text-xs overflow-x-auto h-32 border-2 border-neutral-800 font-mono shadow-[inset_0_0_15px_rgba(0,255,0,0.05)]">
+          <pre className="bg-black/80 backdrop-blur-md text-green-400 p-4 rounded-xl text-xs overflow-x-auto h-32 border border-neutral-800 font-mono shadow-[inset_0_0_20px_rgba(0,255,0,0.03)] custom-scrollbar">
             <code>{command || '> Aguardando seleção...'}</code>
           </pre>
           {command && (
