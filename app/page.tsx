@@ -166,9 +166,21 @@ export default function Home() {
 
   return (
     <div
-      className="flex flex-col md:flex-row min-h-screen font-sans overflow-hidden"
+      className="relative flex flex-col md:flex-row min-h-screen font-sans overflow-hidden"
       style={themeStyle}
     >
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-80"
+        style={{
+          background:
+            "radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 25%), radial-gradient(circle at bottom right, rgba(255,255,255,0.06), transparent 30%)",
+        }}
+        animate={{
+          backgroundPosition: ["0% 0%", "100% 50%", "0% 100%", "0% 0%"],
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      />
       <main
         className="flex-1 flex flex-col p-6 md:p-10 lg:p-12 overflow-y-auto relative z-10"
         style={{ background: activeTheme.hero }}
@@ -268,8 +280,16 @@ export default function Home() {
           transition={{ duration: 0.35, delay: 0.1 }}
           className="mb-8 max-w-xl"
         >
-          <label className="group flex items-center gap-3 rounded-2xl border border-neutral-800/80 bg-neutral-950/70 px-4 py-3 shadow-[0_0_18px_rgba(255,255,255,0.04)] transition-all duration-300 focus-within:border-[var(--accent)]/80 focus-within:shadow-[0_0_20px_rgba(255,255,255,0.08)]">
-            <Search className="h-4 w-4 text-neutral-400 transition-colors duration-300 group-focus-within:text-white" />
+          <motion.label
+            whileFocus={{ scale: 1.01 }}
+            className="group flex items-center gap-3 rounded-2xl border border-neutral-800/80 bg-neutral-950/70 px-4 py-3 shadow-[0_0_18px_rgba(255,255,255,0.04)] transition-all duration-300 focus-within:border-[var(--accent)]/80 focus-within:shadow-[0_0_20px_rgba(255,255,255,0.08)]"
+          >
+            <motion.span
+              animate={{ rotate: searchTerm ? 0 : [-6, 0, 6, 0] }}
+              transition={{ duration: 0.4 }}
+            >
+              <Search className="h-4 w-4 text-neutral-400 transition-colors duration-300 group-focus-within:text-white" />
+            </motion.span>
             <input
               type="text"
               value={searchTerm}
@@ -278,7 +298,7 @@ export default function Home() {
               className="w-full bg-transparent text-sm text-white placeholder:text-neutral-500 focus:outline-none"
               aria-label="Buscar programas"
             />
-          </label>
+          </motion.label>
         </motion.div>
 
         <CategoryFilter
@@ -288,19 +308,31 @@ export default function Home() {
 
         <motion.div
           layout
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.25 }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mt-4"
         >
           {filteredPrograms.map((program) => (
-            <ProgramCard
+            <motion.div
               key={program.id}
-              id={program.id}
-              name={program.name}
-              description={program.description}
-              os={program.os}
-              logo={program.logo}
-              isSelected={!!selectedPrograms.find((p) => p.id === program.id)}
-              onToggle={() => toggleProgram(program)}
-            />
+              layout
+              initial={{ opacity: 0, y: 12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+            >
+              <ProgramCard
+                id={program.id}
+                name={program.name}
+                description={program.description}
+                os={program.os}
+                logo={program.logo}
+                isSelected={!!selectedPrograms.find((p) => p.id === program.id)}
+                onToggle={() => toggleProgram(program)}
+                details={program.details}
+                popular={program.popular}
+              />
+            </motion.div>
           ))}
           {filteredPrograms.length === 0 && (
             <div className="col-span-full py-20 text-center text-neutral-600 font-bold uppercase tracking-widest text-xl">
