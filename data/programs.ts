@@ -1,5 +1,12 @@
 export type OsType = "windows" | "linux";
 
+export interface ProgramDetails {
+  summary: string;
+  features: string[];
+  idealFor: string;
+  website: string;
+}
+
 export interface Program {
   id: string;
   name: string;
@@ -8,6 +15,8 @@ export interface Program {
   categories: string[];
   installCmd: Partial<Record<OsType, string>>;
   logo: string;
+  popular?: boolean;
+  details?: ProgramDetails;
 }
 
 export const CATEGORIES = [
@@ -24,7 +33,33 @@ export const CATEGORIES = [
   { id: "security", label: "SEGURANÇA" },
 ];
 
-export const PROGRAMS: Program[] = [
+const createProgramDetails = (program: Program): ProgramDetails => {
+  const categoryLabel =
+    program.categories[0]?.replace(/-/g, " ") || "produtividade";
+
+  const genericFeatures = [
+    "Instalação rápida",
+    "Compatibilidade com Windows e Linux",
+    "Uso prático para produtividade",
+  ];
+
+  return {
+    summary:
+      program.description ||
+      `Ferramenta útil para ${categoryLabel} com foco em performance e produtividade.`,
+    features: program.details?.features?.length
+      ? program.details.features
+      : genericFeatures,
+    idealFor:
+      program.details?.idealFor ||
+      `Usuários que querem otimizar seu fluxo com ${program.name}.`,
+    website:
+      program.details?.website ||
+      `https://www.google.com/search?q=${encodeURIComponent(program.name)}`,
+  };
+};
+
+const PROGRAMS_BASE: Program[] = [
   // Browsers
   {
     id: "opera-gx",
@@ -47,6 +82,19 @@ export const PROGRAMS: Program[] = [
         "wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add - && sudo sh -c 'echo \"deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main\" >> /etc/apt/sources.list.d/google-chrome.list' && sudo apt update && sudo apt install -y google-chrome-stable",
     },
     logo: "https://cdn.simpleicons.org/googlechrome/4285F4",
+    popular: true,
+    details: {
+      summary:
+        "Navegador rápido, estável e compatível com praticamente todos os sites e serviços web.",
+      features: [
+        "Sincronização com conta Google",
+        "Compatibilidade ampla",
+        "Extensões e produtividade",
+      ],
+      idealFor:
+        "Usuários que querem navegação leve, confiável e compatível com quase tudo.",
+      website: "https://www.google.com/chrome/",
+    },
   },
   {
     id: "firefox",
@@ -188,6 +236,19 @@ export const PROGRAMS: Program[] = [
       linux: "sudo snap install discord",
     },
     logo: "https://cdn.simpleicons.org/discord/5865F2",
+    popular: true,
+    details: {
+      summary:
+        "Plataforma de comunicação para comunidades, amigos e grupos com áudio, vídeo e texto em tempo real.",
+      features: [
+        "Canais e mensagens em texto",
+        "Calls em grupo e voz",
+        "Comunidades, bots e integração",
+      ],
+      idealFor:
+        "Jogadores, comunidades e times que precisam conversar em tempo real.",
+      website: "https://discord.com/",
+    },
   },
   {
     id: "whatsapp",
@@ -259,6 +320,19 @@ export const PROGRAMS: Program[] = [
       linux: "sudo snap install code --classic",
     },
     logo: "https://cdn.simpleicons.org/visualstudiocode/007ACC",
+    popular: true,
+    details: {
+      summary:
+        "Editor leve, rápido e extremamente extensível para desenvolvimento moderno.",
+      features: [
+        "IntelliSense inteligente",
+        "Terminal embutido",
+        "Extensões e temas",
+      ],
+      idealFor:
+        "Programadores e desenvolvedores que querem produtividade e flexibilidade.",
+      website: "https://code.visualstudio.com/",
+    },
   },
   {
     id: "git",
@@ -354,6 +428,19 @@ export const PROGRAMS: Program[] = [
     categories: ["productivity"],
     installCmd: { windows: "winget install -e --id Notion.Notion" },
     logo: "https://cdn.simpleicons.org/notion/white",
+    popular: true,
+    details: {
+      summary:
+        "Bloco de anotações e organização para tarefas, projetos e documentação pessoal ou profissional.",
+      features: [
+        "Banco de conhecimento",
+        "Tabelas e listas",
+        "Colaboração em equipe",
+      ],
+      idealFor:
+        "Pessoas que precisam organizar estudos, projetos e documentação em um só lugar.",
+      website: "https://www.notion.so/",
+    },
   },
   {
     id: "obsidian",
@@ -472,6 +559,19 @@ export const PROGRAMS: Program[] = [
       linux: "sudo snap install spotify",
     },
     logo: "https://cdn.simpleicons.org/spotify/1DB954",
+    popular: true,
+    details: {
+      summary:
+        "Streaming de música, podcast e audiobooks com biblioteca enorme e playlists personalizadas.",
+      features: [
+        "Biblioteca enorme de músicas",
+        "Playlists e recomendações",
+        "Download para escutar offline",
+      ],
+      idealFor:
+        "Usuários que gostam de música, podcast e entretenimento em segundo plano.",
+      website: "https://www.spotify.com/",
+    },
   },
   {
     id: "vlc",
@@ -507,6 +607,19 @@ export const PROGRAMS: Program[] = [
     categories: ["design"],
     installCmd: { windows: "winget install -e --id Figma.Figma" },
     logo: "https://cdn.simpleicons.org/figma/F24E1E",
+    popular: true,
+    details: {
+      summary:
+        "Ferramenta de design colaborativo para interfaces, protótipos e produto digital.",
+      features: [
+        "Protótipos interativos",
+        "Colaboração em tempo real",
+        "Sistema de componentes e design systems",
+      ],
+      idealFor:
+        "Designers, PMs e equipes que criam interfaces e produtos digitais.",
+      website: "https://www.figma.com/",
+    },
   },
   {
     id: "blender",
@@ -578,6 +691,19 @@ export const PROGRAMS: Program[] = [
       linux: "sudo snap install chatgpt-desktop",
     },
     logo: "https://cdn.simpleicons.org/openai/412991",
+    popular: true,
+    details: {
+      summary:
+        "Assistente de IA para responder perguntas, criar conteúdos, resumir textos e ajudar em tarefas do dia a dia.",
+      features: [
+        "Geração de texto",
+        "Resumo e análise de documentos",
+        "Suporte a produtividade e desenvolvimento",
+      ],
+      idealFor:
+        "Quem quer acelerar estudo, trabalho, programação e criação de conteúdo.",
+      website: "https://chat.openai.com/",
+    },
   },
   {
     id: "claude",
@@ -755,6 +881,19 @@ export const PROGRAMS: Program[] = [
         'echo "Ative o Copilot pelo editor de código ou extensão do GitHub"',
     },
     logo: "https://cdn.simpleicons.org/githubcopilot/000000",
+    popular: true,
+    details: {
+      summary:
+        "Assistente de IA para desenvolvimento, sugestões de código e suporte em trabalhos de programação.",
+      features: [
+        "Autocompletar código",
+        "Explicar trechos e erros",
+        "Acelerar fluxo de trabalho de dev",
+      ],
+      idealFor:
+        "Programadores e equipes que querem ganhar velocidade e reduzir erros.",
+      website: "https://github.com/features/copilot",
+    },
   },
   {
     id: "onedrive",
@@ -814,4 +953,113 @@ export const PROGRAMS: Program[] = [
     },
     logo: "https://cdn.simpleicons.org/nextcloud/0082C9",
   },
+  {
+    id: "google-drive",
+    name: "Google Drive",
+    description:
+      "Armazenamento e sincronização de arquivos no ecossistema Google",
+    os: ["windows", "linux"],
+    categories: ["productivity", "utilities"],
+    installCmd: {
+      windows: "winget install -e --id Google.Drive",
+      linux: "sudo snap install google-drive",
+    },
+    logo: "https://cdn.simpleicons.org/googledrive/4285F4",
+    popular: true,
+    details: {
+      summary:
+        "Serviço de armazenamento em nuvem para sincronizar arquivos e colaborar de forma prática.",
+      features: [
+        "Backup de arquivos",
+        "Compartilhamento rápido",
+        "Sincronização em vários dispositivos",
+      ],
+      idealFor:
+        "Quem usa documentos, fotos e arquivos em múltiplos dispositivos.",
+      website: "https://drive.google.com/",
+    },
+  },
+  {
+    id: "canva",
+    name: "Canva",
+    description:
+      "Ferramenta visual para criar artes, posts e apresentações rapidamente",
+    os: ["windows", "linux"],
+    categories: ["design", "productivity"],
+    installCmd: {
+      windows: "winget install -e --id Canva.Canva",
+      linux: "sudo snap install canva",
+    },
+    logo: "https://cdn.simpleicons.org/canva/00C4CC",
+    popular: true,
+    details: {
+      summary:
+        "Plataforma para criação visual com templates prontos e grande produtividade para design rápido.",
+      features: [
+        "Modelos prontos",
+        "Design para redes sociais",
+        "Trabalho em equipe e exportação",
+      ],
+      idealFor:
+        "Quem precisa criar imagens, posts e apresentações sem muita curva de aprendizado.",
+      website: "https://www.canva.com/",
+    },
+  },
+  {
+    id: "capcut",
+    name: "CapCut",
+    description:
+      "Editor de vídeo rápido, moderno e ideal para conteúdo digital",
+    os: ["windows", "linux"],
+    categories: ["media", "design"],
+    installCmd: {
+      windows: "winget install -e --id CapCut.CapCut",
+      linux: "sudo snap install capcut",
+    },
+    logo: "https://cdn.simpleicons.org/capcut/000000",
+    popular: true,
+    details: {
+      summary:
+        "Editor visual fácil para vídeos curtos, reels e conteúdo criativo para redes sociais.",
+      features: [
+        "Edição rápida de vídeo",
+        "Filtros e música",
+        "Recortes para redes sociais",
+      ],
+      idealFor:
+        "Criadores de conteúdo e quem produz vídeos com rapidez e impacto visual.",
+      website: "https://www.capcut.com/",
+    },
+  },
+  {
+    id: "grok",
+    name: "Grok",
+    description:
+      "Assistente de IA com foco em resposta direta e conteúdo em tempo real",
+    os: ["windows", "linux"],
+    categories: ["ai", "productivity"],
+    installCmd: {
+      windows: "winget install -e --id xAI.Grok",
+      linux: "sudo snap install grok",
+    },
+    logo: "https://cdn.simpleicons.org/x/000000",
+    popular: true,
+    details: {
+      summary:
+        "IA para respostas rápidas, consulta de informação e produtividade em conversas rápidas.",
+      features: [
+        "Perguntas rápidas",
+        "Geração de texto",
+        "Apoio a brainstorming e produtividade",
+      ],
+      idealFor:
+        "Usuários que querem respostas ágeis e conversas mais diretas com IA.",
+      website: "https://grok.com/",
+    },
+  },
 ];
+
+export const PROGRAMS: Program[] = PROGRAMS_BASE.map((program) => ({
+  ...program,
+  details: program.details ?? createProgramDetails(program),
+}));
